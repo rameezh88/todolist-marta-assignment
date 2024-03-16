@@ -4,11 +4,9 @@ export const colors = {
   secondaryDark: '#495BF5',
   disabled: '#aeaeae',
   lightPink: '#ffeffe',
-  severity: {
-    veryLow: '#70DAE6',
+  priority: {
     low: '#B0EB74',
-    medium: '#EAD846',
-    high: '#E67439',
-    veryHigh: '#E60105',
+    medium: '#DAD846',
+    high: '#E60105',
   },
 };

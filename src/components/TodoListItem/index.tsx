@@ -1,13 +1,15 @@
 import React from 'react';
+import {TodoItem} from '../../types';
+import {getFormattedDate, getPriorityText} from '../../utils';
 import {
-  TodoItemContainer,
   Checkbox,
-  TextContainer,
-  Title,
   Description,
   DueDate,
+  Priority,
+  TextContainer,
+  Title,
+  TodoItemContainer,
 } from './styles';
-import {TodoItem} from '../../types';
 
 interface TodoListItemProps {
   item: TodoItem;
@@ -20,8 +22,13 @@ const TodoListItem: React.FC<TodoListItemProps> = ({item}) => {
       <TextContainer>
         <Title>{item.title}</Title>
         <Description>{item.description}</Description>
+        <DueDate>{`Due ${getFormattedDate(
+          new Date(item.dueDate * 1000),
+        )}`}</DueDate>
       </TextContainer>
-      <DueDate>{new Date(item.dueDate * 1000).toLocaleDateString()}</DueDate>
+      <Priority priority={item.priority}>
+        {getPriorityText(item.priority)}
+      </Priority>
     </TodoItemContainer>
   );
 };

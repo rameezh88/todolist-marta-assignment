@@ -7,9 +7,11 @@ import {RootStackParamList} from '../../navigation';
 import {Container, Placeholder, AddNewItemButton} from './styles';
 import TodoListItem from '../../components/TodoListItem';
 
+const todoListItems = require('../../dummy/dummyTodoListItems.json');
+
 const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const todoItems: any[] = [];
+  const todoItems: any[] = todoListItems;
 
   return (
     <Container>
