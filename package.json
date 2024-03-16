@@ -7,7 +7,12 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "pod:install": "cd ios && pod install",
+    "clean": "source ./scripts/clean.sh",
+    "android:gradle:clean": "cd android && ./gradlew clean",
+    "android:gradle:build": "cd android && ./gradlew build",
+    "android:gradle:clean:build": "cd android && ./gradlew clean && ./gradlew build"
   },
   "dependencies": {
     "react": "18.2.0",
