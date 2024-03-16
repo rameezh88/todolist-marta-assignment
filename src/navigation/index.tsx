@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from '../screens/HomeScreen';
 import {AddEditTodoItemScreen} from '../screens/AddEditTodoItemScreen';
 import {colors} from '../constants/colors';
+import HomeScreen from '../screens/HomeScreen';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
