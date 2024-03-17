@@ -6,6 +6,7 @@ import {
   Description,
   DueDate,
   Priority,
+  PriorityContainer,
   TextContainer,
   Title,
   TodoItemContainer,
@@ -26,9 +27,9 @@ const TodoListItem: React.FC<TodoListItemProps> = ({item}) => {
           new Date(item.dueDate * 1000),
         )}`}</DueDate>
       </TextContainer>
-      <Priority priority={item.priority}>
-        {getPriorityText(item.priority)}
-      </Priority>
+      <PriorityContainer priority={item.priority}>
+        <Priority>{getPriorityText(item.priority)}</Priority>
+      </PriorityContainer>
     </TodoItemContainer>
   );
 };

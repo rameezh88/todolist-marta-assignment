@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import {TodoItemPriority} from '../../types';
 import {colors} from '../../constants/colors';
 
-// Styled components for the todo list item
 export const TodoItemContainer = styled.View`
   flex-direction: row;
   align-items: flex-start;
@@ -14,7 +13,7 @@ export const Checkbox = styled.View`
   width: 20px;
   height: 20px;
   border: 2px solid #333;
-  border-radius: 5px;
+  border-radius: 8px;
   margin-right: 10px;
   margin-top: 2px;
 `;
@@ -36,13 +35,15 @@ export const Description = styled.Text`
 `;
 
 export const DueDate = styled.Text`
-  margin-top: 5px;
-  font-size: 16px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: grey;
 `;
 
-export const Priority = styled.Text<{priority: TodoItemPriority}>`
-  font-size: 16px;
-  color: ${props => {
+export const PriorityContainer = styled.View<{priority: TodoItemPriority}>`
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: ${props => {
     switch (props.priority) {
       case 1:
         return colors.priority.high;
@@ -52,4 +53,9 @@ export const Priority = styled.Text<{priority: TodoItemPriority}>`
         return colors.priority.low;
     }
   }};
+`;
+
+export const Priority = styled.Text`
+  font-size: 12px;
+  color: white;
 `;
