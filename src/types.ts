@@ -7,4 +7,5 @@ export type TodoItem = {
   completed: boolean;
   priority: TodoItemPriority;
   id: string;
+  createdOn: string; // ISO string
 };

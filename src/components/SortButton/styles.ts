@@ -5,7 +5,7 @@ export const Container = styled.Pressable`
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 120px;
+  width: 150px;
   padding-horizontal: 10px;
 `;
 

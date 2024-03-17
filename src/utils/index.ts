@@ -44,6 +44,10 @@ export function sortBySortOption(
       return todoItems.sort((a, b) =>
         isBefore(new Date(a.dueDate), new Date(b.dueDate)) ? -1 : 1,
       );
+    case 'createdOn':
+      return todoItems.sort((a, b) =>
+        isBefore(new Date(a.createdOn), new Date(b.createdOn)) ? -1 : 1,
+      );
     case 'priority':
       return todoItems.sort((a, b) => a.priority - b.priority);
     default:
