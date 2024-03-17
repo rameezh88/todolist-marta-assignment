@@ -6,4 +6,5 @@ export type TodoItem = {
   dueDate: number; // unix timestamp
   completed: boolean;
   priority: TodoItemPriority;
+  id: string;
 };

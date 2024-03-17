@@ -1,17 +1,36 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {FlashList} from '@shopify/flash-list';
-import React from 'react';
+import React, {useMemo} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RootStackParamList} from '../../navigation';
-import {Container, Placeholder, AddNewItemButton} from './styles';
+import {HomeHeader} from '../../components/HomeHeader';
+import {SortOption} from '../../components/SortButton';
 import TodoListItem from '../../components/TodoListItem';
+import {RootStackParamList} from '../../navigation';
+import {AddNewItemButton, Container, Placeholder} from './styles';
 
 const todoListItems = require('../../dummy/dummyTodoListItems.json');
 
 const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const todoItems: any[] = todoListItems;
+  const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
+
+  const handleSortOptionChange = (sortOption: SortOption) => {
+    console.log('sort option changed to: ', sortOption);
+    setSortOption(sortOption);
+  };
+
+  const sortedList = useMemo(() => {
+    switch (sortOption) {
+      case 'dueDate':
+        return todoItems.sort((a, b) => a.dueDate - b.dueDate);
+      case 'priority':
+        return todoItems.sort((a, b) => a.priority - b.priority);
+      default:
+        return todoItems;
+    }
+  }, [sortOption, todoItems]);
 
   return (
     <Container>
@@ -24,8 +43,11 @@ const HomeScreen = () => {
         ))}
       {todoItems && (
         <FlashList
-          data={todoItems}
-          keyExtractor={item => item.title + item.description}
+          data={sortedList}
+          ListHeaderComponent={
+            <HomeHeader onSortOptionChange={handleSortOptionChange} />
+          }
+          keyExtractor={item => item.id}
           renderItem={({item}) => <TodoListItem item={item} />}
           estimatedItemSize={200}
         />
