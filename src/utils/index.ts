@@ -1,10 +1,12 @@
 import {
+  StepOptions,
   differenceInDays,
   differenceInMinutes,
   format,
   formatDistance,
 } from 'date-fns';
-import {TodoItemPriority} from '../types';
+import {TodoItem, TodoItemPriority} from '../types';
+import {SortOption} from '../components/SortButton';
 
 export function getPriorityText(priority: TodoItemPriority) {
   switch (priority) {
@@ -32,5 +34,19 @@ export function getHumanReadableDate(date: Date) {
     } else {
       return formatDistance(new Date(date), new Date());
     }
+  }
+}
+
+export function sortBySortOption(
+  todoItems: TodoItem[],
+  sortOption: SortOption,
+) {
+  switch (sortOption) {
+    case 'dueDate':
+      return todoItems.sort((a, b) => a.dueDate - b.dueDate);
+    case 'priority':
+      return todoItems.sort((a, b) => a.priority - b.priority);
+    default:
+      return todoItems;
   }
 }

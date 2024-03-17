@@ -8,6 +8,7 @@ import {SortOption} from '../../components/SortButton';
 import TodoListItem from '../../components/TodoListItem';
 import {RootStackParamList} from '../../navigation';
 import {AddNewItemButton, Container, Placeholder} from './styles';
+import {sortBySortOption} from '../../utils';
 
 const todoListItems = require('../../dummy/dummyTodoListItems.json');
 
@@ -16,21 +17,14 @@ const HomeScreen = () => {
   const todoItems: any[] = todoListItems;
   const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
 
-  const handleSortOptionChange = (sortOption: SortOption) => {
-    console.log('sort option changed to: ', sortOption);
-    setSortOption(sortOption);
+  const handleSortOptionChange = (option: SortOption) => {
+    setSortOption(option);
   };
 
-  const sortedList = useMemo(() => {
-    switch (sortOption) {
-      case 'dueDate':
-        return todoItems.sort((a, b) => a.dueDate - b.dueDate);
-      case 'priority':
-        return todoItems.sort((a, b) => a.priority - b.priority);
-      default:
-        return todoItems;
-    }
-  }, [sortOption, todoItems]);
+  const sortedList = useMemo(
+    () => sortBySortOption(todoItems, sortOption),
+    [sortOption, todoItems],
+  );
 
   return (
     <Container>
