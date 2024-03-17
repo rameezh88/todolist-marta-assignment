@@ -3,7 +3,7 @@
     "id": "1",
     "title": "Complete Project Proposal",
     "description": "Draft and finalize the project proposal document",
-    "dueDate": 1644720000, // Unix timestamp for February 13, 2022
+    "dueDate": "2022-10-15T08:30:00+02:00", // ISO timestamp for February 13, 2022
     "completed": false,
     "priority": 1
   },
@@ -11,7 +11,7 @@
     "id": "2",
     "title": "Prepare Presentation Slides",
     "description": "Create slides for the project presentation",
-    "dueDate": 1644979200, // Unix timestamp for February 16, 2022
+    "dueDate": "2021-05-20T15:45:00+02:00", // ISO timestamp for February 16, 2022
     "completed": false,
     "priority": 1
   },
@@ -19,7 +19,7 @@
     "id": "3",
     "title": "Review Code Changes",
     "description": "Review and merge code changes from the feature branch",
-    "dueDate": 1645248000, // Unix timestamp for February 19, 2022
+    "dueDate": "2026-03-05T14:20:00+01:00", // ISO timestamp for February 19, 2022
     "completed": true,
     "priority": 2
   },
@@ -27,7 +27,7 @@
     "id": "4",
     "title": "Submit Expense Report",
     "description": "Submit expense report for project expenses reimbursement",
-    "dueDate": 1645516800, // Unix timestamp for February 22, 2022
+    "dueDate": "2025-11-15T20:45:00+01:00", // ISO timestamp for February 22, 2022
     "completed": false,
     "priority": 1
   },
@@ -35,7 +35,7 @@
     "id": "5",
     "title": "Submit Expense Report",
     "description": "Submit expense report for project expenses reimbursement",
-    "dueDate": 1645516800, // Unix timestamp for February 22, 2022
+    "dueDate": "2024-09-10T10:30:00+02:00", // ISO timestamp for February 22, 2022
     "completed": false,
     "priority": 2
   },
@@ -43,7 +43,7 @@
     "id": "6",
     "title": "Submit Expense Report",
     "description": "Submit expense report for project expenses reimbursement",
-    "dueDate": 1645516800, // Unix timestamp for February 22, 2022
+    "dueDate": "2024-06-25T18:00:00+02:00", // ISO timestamp for February 22, 2022
     "completed": false,
     "priority": 3
   },
@@ -51,7 +51,7 @@
     "id": "7",
     "title": "Submit Expense Report",
     "description": "Submit expense report for project expenses reimbursement",
-    "dueDate": 1645516800, // Unix timestamp for February 22, 2022
+    "dueDate": "2020-12-05T12:00:00+01:00", // ISO timestamp for February 22, 2022
     "completed": false,
     "priority": 1
   },
@@ -59,9 +59,8 @@
     "id": "8",
     "title": "Submit Expense Report",
     "description": "Submit expense report for project expenses reimbursement",
-    "dueDate": 1645516800, // Unix timestamp for February 22, 2022
+    "dueDate": "2019-08-30T09:15:00+02:00", // ISO timestamp for February 22, 2022
     "completed": false,
     "priority": 2
   }
-  // Additional todo items...
 ]

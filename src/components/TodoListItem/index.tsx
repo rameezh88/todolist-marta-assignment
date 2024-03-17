@@ -23,9 +23,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({item}) => {
       <TextContainer>
         <Title>{item.title}</Title>
         <Description>{item.description}</Description>
-        <DueDate>{`Due ${getFormattedDate(
-          new Date(item.dueDate * 1000),
-        )}`}</DueDate>
+        <DueDate>{`Due ${getFormattedDate(new Date(item.dueDate))}`}</DueDate>
       </TextContainer>
       <PriorityContainer priority={item.priority}>
         <Priority>{getPriorityText(item.priority)}</Priority>
