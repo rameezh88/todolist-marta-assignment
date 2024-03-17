@@ -32,7 +32,7 @@ const HomeScreen = () => {
       {!todoItems ||
         (todoItems.length === 0 && (
           <Placeholder>
-            {`This is where your todo items are shown.\n\nClick on the button below to add a new one!`}{' '}
+            {`This is where your todo items are shown.\n\nClick on the button below to add a new one!`}
           </Placeholder>
         ))}
       {todoItems && (
