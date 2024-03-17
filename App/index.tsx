@@ -11,14 +11,17 @@ import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigator from '../src/navigation';
 import {AppSafeAreaView} from './styles';
+import {PaperProvider} from 'react-native-paper';
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <AppSafeAreaView>
-        <StatusBar barStyle={'dark-content'} />
-        <RootNavigator />
-      </AppSafeAreaView>
+      <PaperProvider>
+        <AppSafeAreaView>
+          <StatusBar barStyle={'dark-content'} />
+          <RootNavigator />
+        </AppSafeAreaView>
+      </PaperProvider>
     </NavigationContainer>
   );
 }

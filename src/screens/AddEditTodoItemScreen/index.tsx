@@ -10,6 +10,7 @@ import {TodoItemPriority} from '../../types';
 import PrioritySelector from '../../components/PrioritySelector';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation';
+import DateTimeEntry from '../../components/DateTimeEntry';
 
 export function AddEditTodoItemScreen() {
   const {params} =
@@ -17,11 +18,12 @@ export function AddEditTodoItemScreen() {
 
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  // const [dueDate, setDueDate] = useState<string>('');
+  const [dueDate, setDueDate] = useState<string>('');
   const [priority, setPriority] = useState<TodoItemPriority | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(true);
 
   const handleTitleChange = (text: string) => {
+    setIsEditing(true);
     setTitle(text);
   };
 
@@ -34,11 +36,16 @@ export function AddEditTodoItemScreen() {
   };
 
   const titleIsValid = useMemo(
-    () => isEditing && title.length > 0,
+    () => isEditing || title.length > 0,
     [title, isEditing],
   );
 
+  const handleDateChange = (date: Date) => {
+    setDueDate(date.toUTCString());
+  };
+
   const handleSavePress = () => {
+    setIsEditing(false);
     // Save the todo item
   };
 
@@ -60,6 +67,7 @@ export function AddEditTodoItemScreen() {
         multiline
       />
       <PrioritySelector onPriorityChange={handleOnPriorityChange} />
+      <DateTimeEntry onValueChange={handleDateChange} />
       <SaveButton onPress={handleSavePress}>
         <SaveButtonText>
           {params?.mode === 'edit' ? 'Save changes' : 'Create todo'}
