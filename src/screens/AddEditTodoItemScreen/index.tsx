@@ -1,9 +1,20 @@
 import React, {useMemo, useState} from 'react';
-import {Container, DescriptionInput, TitleInput} from './styles';
+import {
+  Container,
+  DescriptionInput,
+  SaveButton,
+  SaveButtonText,
+  TitleInput,
+} from './styles';
 import {TodoItemPriority} from '../../types';
 import PrioritySelector from '../../components/PrioritySelector';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '../../navigation';
 
 export function AddEditTodoItemScreen() {
+  const {params} =
+    useRoute<RouteProp<RootStackParamList, 'AddEditTodoItemScreen'>>();
+
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   // const [dueDate, setDueDate] = useState<string>('');
@@ -23,9 +34,13 @@ export function AddEditTodoItemScreen() {
   };
 
   const titleIsValid = useMemo(
-    () => !isEditing && title.length > 0,
+    () => isEditing && title.length > 0,
     [title, isEditing],
   );
+
+  const handleSavePress = () => {
+    // Save the todo item
+  };
 
   return (
     <Container>
@@ -35,14 +50,21 @@ export function AddEditTodoItemScreen() {
         validationMessage="Title cannot be empty"
         onChangeText={handleTitleChange}
         isValid={titleIsValid}
+        autoCorrect={false}
       />
       <DescriptionInput
         value={description}
         placeholder="Enter description"
         onChangeText={handleDescriptionChange}
+        autoCorrect={false}
         multiline
       />
       <PrioritySelector onPriorityChange={handleOnPriorityChange} />
+      <SaveButton onPress={handleSavePress}>
+        <SaveButtonText>
+          {params?.mode === 'edit' ? 'Save changes' : 'Create todo'}
+        </SaveButtonText>
+      </SaveButton>
     </Container>
   );
 }
