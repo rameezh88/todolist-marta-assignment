@@ -34,3 +34,7 @@ export const SaveButtonText = styled.Text`
   font-weight: bold;
   font-size: 16px;
 `;
+
+export const HeaderButton = styled.Pressable`
+  margin-horizontal: 15px;
+`;
