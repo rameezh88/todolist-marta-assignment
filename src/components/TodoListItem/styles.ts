@@ -51,6 +51,8 @@ export const PriorityContainer = styled.View<{priority: TodoItemPriority}>`
         return colors.priority.medium;
       case 3:
         return colors.priority.low;
+      default:
+        return 'transparent';
     }
   }};
 `;

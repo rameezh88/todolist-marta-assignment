@@ -22,12 +22,16 @@ const TodoListItem: React.FC<TodoListItemProps> = ({item}) => {
       <Checkbox />
       <TextContainer>
         <Title>{item.title}</Title>
-        <Description>{item.description}</Description>
-        <DueDate>{`Due ${getFormattedDate(new Date(item.dueDate))}`}</DueDate>
+        {item.description && <Description>{item.description}</Description>}
+        {item.dueDate && (
+          <DueDate>{`Due ${getFormattedDate(new Date(item.dueDate))}`}</DueDate>
+        )}
       </TextContainer>
-      <PriorityContainer priority={item.priority}>
-        <Priority>{getPriorityText(item.priority)}</Priority>
-      </PriorityContainer>
+      {item.priority && (
+        <PriorityContainer priority={item.priority}>
+          <Priority>{getPriorityText(item.priority)}</Priority>
+        </PriorityContainer>
+      )}
     </TodoItemContainer>
   );
 };
