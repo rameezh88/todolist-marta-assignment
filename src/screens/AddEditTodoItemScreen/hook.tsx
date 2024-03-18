@@ -1,13 +1,13 @@
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RootStackParamList} from '../../navigation';
 import {TodoItemPriority} from '../../types';
 import {HeaderButton} from './styles';
 import {useDispatch} from 'react-redux';
 import {createTodoItem} from '../../redux/reducers/todos';
 import {makeId} from '../../utils';
 import {debounce} from 'lodash';
+import {RootStackParamList} from '../../navigation';
 
 const useHook = () => {
   const navigation = useNavigation();
@@ -15,6 +15,12 @@ const useHook = () => {
     useRoute<RouteProp<RootStackParamList, 'AddEditTodoItemScreen'>>();
 
   const dispatch = useDispatch();
+
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [dueDate, setDueDate] = useState<string>('');
+  const [priority, setPriority] = useState<TodoItemPriority>(4);
+  const [isEditing, setIsEditing] = useState<boolean>(true);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -33,12 +39,6 @@ const useHook = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
-
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [dueDate, setDueDate] = useState<string>('');
-  const [priority, setPriority] = useState<TodoItemPriority | null>(null);
-  const [isEditing, setIsEditing] = useState<boolean>(true);
 
   const handleTitleChange = (text: string) => {
     setIsEditing(true);
@@ -76,11 +76,17 @@ const useHook = () => {
     );
   }, 200);
 
+  useEffect(() => {
+    if (!isEditing && titleIsValid) {
+      // Save the todo item
+      debouncedSaveToStore();
+      navigation.goBack();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing, titleIsValid]);
+
   const handleSavePress = () => {
     setIsEditing(false);
-    // Save the todo item
-    debouncedSaveToStore();
-    navigation.goBack();
   };
 
   const handleClosePress = () => {

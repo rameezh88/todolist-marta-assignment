@@ -9,12 +9,12 @@ import TodoListItem from '../../components/TodoListItem';
 import {RootStackParamList} from '../../navigation';
 import {AddNewItemButton, Container, Placeholder} from './styles';
 import {sortBySortOption} from '../../utils';
-
-const todoListItems = require('../../dummy/dummyTodoListItems.json');
+import {useSelector} from 'react-redux';
+import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
 
 const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const todoItems: any[] = todoListItems;
+  const todoItems = useSelector(selectSavedTodos);
   const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
 
   const handleSortOptionChange = (option: SortOption) => {
