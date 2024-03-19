@@ -2,7 +2,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Container, IconContainer, Title} from './styles';
 
-export type SortOption = 'dueDate' | 'priority' | 'createdOn';
+export type SortOption =
+  | 'dueDate'
+  | 'priority'
+  | 'createdOn'
+  | 'complete'
+  | 'incomplete';
 
 interface SortButtonProps {
   onSortOptionChange: (sortOption: SortOption) => void;
@@ -10,7 +15,13 @@ interface SortButtonProps {
 
 const ICON_SIZE = 14;
 
-const sortOptions = ['dueDate', 'priority', 'createdOn'];
+const sortOptions = [
+  'dueDate',
+  'complete',
+  'incomplete',
+  'priority',
+  'createdOn',
+];
 
 export function SortButton({onSortOptionChange}: SortButtonProps) {
   const [current, setCurrent] = useState<number>(0);
@@ -32,6 +43,10 @@ export function SortButton({onSortOptionChange}: SortButtonProps) {
         return 'Priority';
       case 'createdOn':
         return 'Created On';
+      case 'complete':
+        return 'Complete';
+      case 'incomplete':
+        return 'Incomplete';
       default:
         return 'Due Date';
     }

@@ -57,7 +57,8 @@ export function sortBySortOption(
             return 0;
           }
           return isBefore(new Date(a.dueDate), new Date(b.dueDate)) ? -1 : 1;
-        });
+        })
+        .reverse();
     case 'createdOn':
       return [...todoItems].sort((a, b) =>
         isBefore(new Date(a.createdOn), new Date(b.createdOn)) ? -1 : 1,
@@ -66,6 +67,14 @@ export function sortBySortOption(
       return [...todoItems]
         .sort((a, b) => a.priority - b.priority)
         .sort(a => (a.priority > 0 ? 1 : -1));
+    case 'complete':
+      return [...todoItems].sort(
+        (a, b) => Number(b.completed) - Number(a.completed),
+      );
+    case 'incomplete':
+      return [...todoItems].sort(
+        (a, b) => Number(a.completed) - Number(b.completed),
+      );
     default:
       return todoItems;
   }
