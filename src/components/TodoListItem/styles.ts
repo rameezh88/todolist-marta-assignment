@@ -10,15 +10,6 @@ export const TodoItemContainer = styled.View`
   background: white;
 `;
 
-export const Checkbox = styled.View`
-  width: 20px;
-  height: 20px;
-  border: 2px solid #333;
-  border-radius: 8px;
-  margin-right: 10px;
-  margin-top: 2px;
-`;
-
 export const TextContainer = styled.View`
   flex: 1;
   margin-right: 10px;

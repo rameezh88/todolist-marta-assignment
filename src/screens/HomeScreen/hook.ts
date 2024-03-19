@@ -4,7 +4,10 @@ import React, {useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {SortOption} from '../../components/SortButton';
 import {RootStackParamList} from '../../navigation';
-import {deleteTodoItem} from '../../redux/reducers/todos';
+import {
+  deleteTodoItem,
+  setTodoCompletedState,
+} from '../../redux/reducers/todos';
 import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
 import {TodoItem} from '../../types';
 import {sortBySortOption} from '../../utils';
@@ -43,6 +46,15 @@ const useHook = () => {
     setConfirmationDialogVisible(false);
   };
 
+  const handleToggleCompletedState = (item: TodoItem, checked: boolean) => {
+    dispatch(
+      setTodoCompletedState({
+        id: item.id,
+        completed: checked,
+      }),
+    );
+  };
+
   return {
     todoItems,
     confirmationDialogVisible,
@@ -52,6 +64,7 @@ const useHook = () => {
     sortedList,
     handleDeletionDialogConfirm,
     navigation,
+    handleToggleCompletedState,
   };
 };
 

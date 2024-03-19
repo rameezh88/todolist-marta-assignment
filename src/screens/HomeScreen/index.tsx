@@ -17,6 +17,7 @@ const HomeScreen = () => {
     sortedList,
     handleDeletionDialogConfirm,
     navigation,
+    handleToggleCompletedState,
   } = useHook();
 
   return (
@@ -38,7 +39,11 @@ const HomeScreen = () => {
           }
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <TodoListItem onDelete={handleDelete} item={item} />
+            <TodoListItem
+              handleToggleCheckbox={handleToggleCompletedState}
+              onDelete={handleDelete}
+              item={item}
+            />
           )}
           estimatedItemSize={200}
         />
