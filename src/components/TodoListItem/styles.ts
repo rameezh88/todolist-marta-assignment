@@ -7,6 +7,7 @@ export const TodoItemContainer = styled.View`
   align-items: flex-start;
   justify-content: space-between;
   padding: 10px;
+  background: white;
 `;
 
 export const Checkbox = styled.View`
@@ -60,4 +61,8 @@ export const PriorityContainer = styled.View<{priority: TodoItemPriority}>`
 export const Priority = styled.Text`
   font-size: 12px;
   color: white;
+`;
+
+export const DeleteButtonContainer = styled.View`
+  padding: 2px 8px;
 `;

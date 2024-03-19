@@ -3,19 +3,21 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {FlashList} from '@shopify/flash-list';
 import React, {useMemo} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useSelector} from 'react-redux';
 import {HomeHeader} from '../../components/HomeHeader';
 import {SortOption} from '../../components/SortButton';
 import TodoListItem from '../../components/TodoListItem';
 import {RootStackParamList} from '../../navigation';
-import {AddNewItemButton, Container, Placeholder} from './styles';
-import {sortBySortOption} from '../../utils';
-import {useSelector} from 'react-redux';
 import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
+import {TodoItem} from '../../types';
+import {sortBySortOption} from '../../utils';
+import {AddNewItemButton, Container, Placeholder} from './styles';
 
 const HomeScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const todoItems = useSelector(selectSavedTodos);
   const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
+  // const dispatch = useDispatch();
 
   const handleSortOptionChange = (option: SortOption) => {
     setSortOption(option);
@@ -25,6 +27,12 @@ const HomeScreen = () => {
     () => sortBySortOption(todoItems, sortOption),
     [sortOption, todoItems],
   );
+
+  const handleDelete = (item: TodoItem) => {
+    // console.log('Should delete item', item);
+    // Show confirmation dialog for deletion
+    // dispatch(deleteTodoItem(item.id));
+  };
 
   return (
     <Container>
@@ -42,7 +50,9 @@ const HomeScreen = () => {
             <HomeHeader onSortOptionChange={handleSortOptionChange} />
           }
           keyExtractor={item => item.id}
-          renderItem={({item}) => <TodoListItem item={item} />}
+          renderItem={({item}) => (
+            <TodoListItem onDelete={handleDelete} item={item} />
+          )}
           estimatedItemSize={200}
         />
       )}

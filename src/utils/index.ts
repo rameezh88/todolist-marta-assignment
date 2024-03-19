@@ -1,4 +1,10 @@
-import {differenceInDays, format, formatDistance, isBefore} from 'date-fns';
+import {
+  differenceInDays,
+  differenceInHours,
+  format,
+  formatDistance,
+  isBefore,
+} from 'date-fns';
 import {SortOption} from '../components/SortButton';
 import {TodoItem, TodoItemPriority} from '../types';
 
@@ -15,6 +21,9 @@ export function getPriorityText(priority: TodoItemPriority) {
 
 export function getFormattedDate(date: Date) {
   if (isBefore(date, new Date())) {
+    if (differenceInHours(new Date(), date) < 24) {
+      return `at ${getHumanReadableDate(date)}`;
+    }
     return `${getHumanReadableDate(date)} ago`;
   } else {
     if (differenceInDays(date, new Date()) > 1) {
@@ -41,15 +50,22 @@ export function sortBySortOption(
 ) {
   switch (sortOption) {
     case 'dueDate':
-      return todoItems.sort((a, b) =>
-        isBefore(new Date(a.dueDate), new Date(b.dueDate)) ? -1 : 1,
-      );
+      return [...todoItems]
+        .sort(a => (a.dueDate !== null ? -1 : 1))
+        .sort((a, b) => {
+          if (!a.dueDate || !b.dueDate) {
+            return 0;
+          }
+          return isBefore(new Date(a.dueDate), new Date(b.dueDate)) ? -1 : 1;
+        });
     case 'createdOn':
-      return todoItems.sort((a, b) =>
+      return [...todoItems].sort((a, b) =>
         isBefore(new Date(a.createdOn), new Date(b.createdOn)) ? -1 : 1,
       );
     case 'priority':
-      return todoItems.sort((a, b) => a.priority - b.priority);
+      return [...todoItems]
+        .sort((a, b) => a.priority - b.priority)
+        .sort(a => (a.priority > 0 ? 1 : -1));
     default:
       return todoItems;
   }
