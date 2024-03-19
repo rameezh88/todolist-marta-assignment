@@ -1,38 +1,23 @@
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {FlashList} from '@shopify/flash-list';
-import React, {useMemo} from 'react';
+import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
+import {ConfirmationDialog} from '../../components/ConfirmationDialog';
 import {HomeHeader} from '../../components/HomeHeader';
-import {SortOption} from '../../components/SortButton';
 import TodoListItem from '../../components/TodoListItem';
-import {RootStackParamList} from '../../navigation';
-import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
-import {TodoItem} from '../../types';
-import {sortBySortOption} from '../../utils';
+import useHook from './hook';
 import {AddNewItemButton, Container, Placeholder} from './styles';
 
 const HomeScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const todoItems = useSelector(selectSavedTodos);
-  const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
-  // const dispatch = useDispatch();
-
-  const handleSortOptionChange = (option: SortOption) => {
-    setSortOption(option);
-  };
-
-  const sortedList = useMemo(
-    () => sortBySortOption(todoItems, sortOption),
-    [sortOption, todoItems],
-  );
-
-  const handleDelete = (item: TodoItem) => {
-    // console.log('Should delete item', item);
-    // Show confirmation dialog for deletion
-    // dispatch(deleteTodoItem(item.id));
-  };
+  const {
+    todoItems,
+    confirmationDialogVisible,
+    handleDelete,
+    handleHideDeleteConfirmationDialog,
+    handleSortOptionChange,
+    sortedList,
+    handleDeletionDialogConfirm,
+    navigation,
+  } = useHook();
 
   return (
     <Container>
@@ -40,7 +25,9 @@ const HomeScreen = () => {
       {!todoItems ||
         (todoItems.length === 0 && (
           <Placeholder>
-            {`This is where your todo items are shown.\n\nClick on the button below to add a new one!`}
+            {
+              'This is where your todo items are shown.\n\nClick on the button below to add a new one!'
+            }
           </Placeholder>
         ))}
       {todoItems && (
@@ -60,6 +47,14 @@ const HomeScreen = () => {
         onPress={() => navigation.navigate('AddEditTodoItemScreen')}>
         <Ionicons name="add-outline" size={32} color="white" />
       </AddNewItemButton>
+      <ConfirmationDialog
+        title="Delete Todo Item"
+        description="Are you sure you want to delete this todo item?"
+        doneText="Delete"
+        hideDialog={handleHideDeleteConfirmationDialog}
+        onConfirm={handleDeletionDialogConfirm}
+        visible={confirmationDialogVisible}
+      />
     </Container>
   );
 };
