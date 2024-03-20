@@ -4,6 +4,7 @@ import {AddEditTodoItemScreen} from '../screens/AddEditTodoItemScreen';
 import {colors} from '../constants/colors';
 import HomeScreen from '../screens/HomeScreen';
 import {TodoItem} from '../types';
+import useSyncTodoData from '../hooks/useSyncTodoData';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -16,6 +17,8 @@ export type RootStackParamList = {
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
+  useSyncTodoData();
+
   return (
     <RootStack.Navigator
       screenOptions={{
