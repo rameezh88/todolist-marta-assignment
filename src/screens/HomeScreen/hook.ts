@@ -55,6 +55,14 @@ const useHook = () => {
     );
   };
 
+  const handleCreatePressed = () => {
+    navigation.navigate('AddEditTodoItemScreen');
+  };
+
+  const handleEditPressed = (item: TodoItem) => {
+    navigation.navigate('AddEditTodoItemScreen', {mode: 'edit', item});
+  };
+
   return {
     todoItems,
     confirmationDialogVisible,
@@ -63,8 +71,9 @@ const useHook = () => {
     handleSortOptionChange,
     sortedList,
     handleDeletionDialogConfirm,
-    navigation,
     handleToggleCompletedState,
+    handleCreatePressed,
+    handleEditPressed,
   };
 };
 

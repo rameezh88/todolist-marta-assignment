@@ -78,6 +78,7 @@ const useHook = () => {
             description,
             dueDate,
             priority,
+            updated: new Date().toUTCString(),
           }),
         );
       }
@@ -90,6 +91,7 @@ const useHook = () => {
           priority,
           completed: false,
           createdOn: new Date().toUTCString(),
+          updated: new Date().toUTCString(),
           id: makeId(10), // Create a unique id for each todo item
         }),
       );

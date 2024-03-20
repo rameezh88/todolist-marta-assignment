@@ -2,10 +2,13 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {TodoItem} from '../../../types';
 
 export interface SavedState {
+  // Keeps track of when the last local update was performed.
+  updated: string; // ISO string
   todos: TodoItem[];
 }
 
 const initialState: SavedState = {
+  updated: '',
   todos: [],
 };
 
@@ -13,10 +16,20 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    updateLastUpdated: (state, action: PayloadAction<string>) => {
+      // Keeps track of when the last local update was performed.
+      state.updated = action.payload;
+    },
     addTodoItems: (state, action: PayloadAction<TodoItem[]>) => {
+      // Add the new items to the end of the todos list
       state.todos = [...state.todos, ...action.payload];
     },
+    replaceTodoItems: (state, action: PayloadAction<TodoItem[]>) => {
+      // Replace the existing items with the new ones. Used for syncing with the backend.
+      state.todos = action.payload;
+    },
     saveChangesToTodoItem: (state, action: PayloadAction<TodoItem>) => {
+      // Update an existing item in the list
       state.todos = state.todos.map(todo => {
         if (todo.id === action.payload.id) {
           return action.payload;
@@ -25,6 +38,7 @@ const todosSlice = createSlice({
       });
     },
     createTodoItem: (state, action: PayloadAction<TodoItem>) => {
+      // Create a new item in the list
       state.todos.push(action.payload);
     },
     deleteTodoItem: (state, action: PayloadAction<string>) => {
@@ -51,10 +65,12 @@ const todosSlice = createSlice({
 });
 
 export const {
+  updateLastUpdated,
   createTodoItem,
   deleteTodoItem,
   saveChangesToTodoItem,
   setTodoCompletedState,
+  replaceTodoItems,
   addTodoItems,
   clearAll,
 } = todosSlice.actions;
