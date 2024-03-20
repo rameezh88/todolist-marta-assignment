@@ -1,0 +1,36 @@
+diff --git a/node_modules/react-native-paper/src/components/Checkbox/CheckboxIOS.tsx b/node_modules/react-native-paper/src/components/Checkbox/CheckboxIOS.tsx
+index e5f2c1a..e7570dd 100644
+--- a/node_modules/react-native-paper/src/components/Checkbox/CheckboxIOS.tsx
++++ b/node_modules/react-native-paper/src/components/Checkbox/CheckboxIOS.tsx
+@@ -1,5 +1,5 @@
+ import * as React from 'react';
+-import { GestureResponderEvent, StyleSheet, View } from 'react-native';
++import { GestureResponderEvent, StyleProp, StyleSheet, View } from 'react-native';
+ 
+ import { getSelectionControlIOSColor } from './utils';
+ import { useInternalTheme } from '../../core/theming';
+@@ -32,6 +32,7 @@ export type Props = $RemoveChildren<typeof TouchableRipple> & {
+    * testID to be used on tests.
+    */
+   testID?: string;
++  style?: any;
+ };
+ 
+ /**
+@@ -47,6 +48,7 @@ const CheckboxIOS = ({
+   onPress,
+   theme: themeOverrides,
+   testID,
++  style,
+   ...rest
+ }: Props) => {
+   const theme = useInternalTheme(themeOverrides);
+@@ -72,7 +74,7 @@ const CheckboxIOS = ({
+       accessibilityRole="checkbox"
+       accessibilityState={{ disabled, checked }}
+       accessibilityLiveRegion="polite"
+-      style={styles.container}
++      style={[styles.container, style]}
+       testID={testID}
+       theme={theme}
+     >

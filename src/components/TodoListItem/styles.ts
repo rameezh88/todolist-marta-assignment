@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import {TodoItemPriority} from '../../types';
 import {colors} from '../../constants/colors';
+import {Checkbox} from 'react-native-paper';
 
 export const TodoItemContainer = styled.View`
   flex-direction: row;
@@ -30,6 +31,14 @@ export const DueDate = styled.Text`
   margin-top: 8px;
   font-size: 11px;
   color: grey;
+`;
+
+export const TodoCheckBox = styled(Checkbox)`
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: ${colors.primary};
+  padding: 0px;
+  margin-right: 15px;
 `;
 
 export const PriorityContainer = styled.View<{priority: TodoItemPriority}>`

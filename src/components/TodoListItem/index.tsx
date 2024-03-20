@@ -5,15 +5,18 @@ import {colors} from '../../constants/colors';
 import {TodoItem} from '../../types';
 import {getFormattedDate, getPriorityText} from '../../utils';
 import {
+  CheckBoxContainer,
   Description,
   DueDate,
   Priority,
   PriorityContainer,
   TextContainer,
   Title,
+  TodoCheckBox,
   TodoItemContainer,
 } from './styles';
 import {renderTodoListItemRightActions} from './utils';
+import {Checkbox} from 'react-native-paper';
 
 interface TodoListItemProps {
   item: TodoItem;
@@ -30,8 +33,8 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
     onDelete?.(item);
   };
 
-  const onToggleCheckbox = (checked: boolean) => {
-    handleToggleCheckbox?.(item, checked);
+  const onToggleCheckbox = () => {
+    handleToggleCheckbox?.(item, !item.completed);
   };
 
   return (
@@ -39,12 +42,10 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
       onSwipeableWillClose={handleDelete}
       renderRightActions={renderTodoListItemRightActions}>
       <TodoItemContainer>
-        <BouncyCheckbox
-          isChecked={item.completed}
-          size={22}
-          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          fillColor={colors.primary}
-          unfillColor="#FFFFFF"
+        <TodoCheckBox
+          status={item.completed ? 'checked' : 'unchecked'}
+          color={colors.primary}
+          uncheckedColor={colors.secondary}
           onPress={onToggleCheckbox}
         />
         <TextContainer>
@@ -53,6 +54,11 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
           {item.dueDate && (
             <DueDate>{`Due ${getFormattedDate(
               new Date(item.dueDate),
+            )}`}</DueDate>
+          )}
+          {__DEV__ && (
+            <DueDate>{`Created: ${getFormattedDate(
+              new Date(item.createdOn),
             )}`}</DueDate>
           )}
         </TextContainer>
