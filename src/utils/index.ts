@@ -1,4 +1,5 @@
 import {
+  compareAsc,
   differenceInDays,
   differenceInHours,
   format,
@@ -44,37 +45,62 @@ export function getHumanReadableDate(date: Date) {
   }
 }
 
+const getSortedTodoListByField = (
+  todoItems: TodoItem[],
+  sortOption: keyof TodoItem,
+  sortFunction: any,
+) => {
+  const itemsWithoutOption = todoItems.filter(item => !item[sortOption]);
+  const sortedItemsWithOption = todoItems
+    .filter(item => item[sortOption])
+    .sort(sortFunction);
+
+  return [...sortedItemsWithOption, ...itemsWithoutOption];
+};
+
+const sortByCompletedState = (todoItems: TodoItem[]) => {
+  // Separate out completed items from the incomplete ones, sort them by createdOn, and then concat them.
+  const completedItems = todoItems
+    .filter(item => item.completed)
+    .sort((a, b) => compareAsc(new Date(a.createdOn), new Date(b.createdOn)));
+  const incompleteItems = todoItems
+    .filter(item => !item.completed)
+    .sort((a, b) => compareAsc(new Date(a.createdOn), new Date(b.createdOn)));
+
+  return [...completedItems, ...incompleteItems];
+};
+
 export function sortBySortOption(
   todoItems: TodoItem[],
   sortOption: SortOption,
 ) {
   switch (sortOption) {
     case 'dueDate':
-      return [...todoItems]
-        .sort(a => (a.dueDate !== null ? -1 : 1))
-        .sort((a, b) => {
-          if (!a.dueDate || !b.dueDate) {
-            return 0;
+      return getSortedTodoListByField(
+        todoItems,
+        'dueDate',
+        (a: TodoItem, b: TodoItem) => {
+          if (a.dueDate && b.dueDate) {
+            return compareAsc(new Date(a.dueDate), new Date(b.dueDate));
           }
-          return isBefore(new Date(a.dueDate), new Date(b.dueDate)) ? -1 : 1;
-        })
-        .reverse();
+
+          return 0;
+        },
+      );
     case 'createdOn':
       return [...todoItems].sort((a, b) =>
-        isBefore(new Date(a.createdOn), new Date(b.createdOn)) ? -1 : 1,
+        compareAsc(new Date(a.createdOn), new Date(b.createdOn)),
       );
     case 'priority':
-      return [...todoItems]
-        .sort((a, b) => a.priority - b.priority)
-        .sort(a => (a.priority > 0 ? 1 : -1));
+      return getSortedTodoListByField(
+        todoItems,
+        'priority',
+        (a: TodoItem, b: TodoItem) => a.priority - b.priority,
+      );
     case 'complete':
-      return [...todoItems].sort(
-        (a, b) => Number(b.completed) - Number(a.completed),
-      );
+      return sortByCompletedState(todoItems);
     case 'incomplete':
-      return [...todoItems].sort(
-        (a, b) => Number(a.completed) - Number(b.completed),
-      );
+      return sortByCompletedState(todoItems).reverse();
     default:
       return todoItems;
   }

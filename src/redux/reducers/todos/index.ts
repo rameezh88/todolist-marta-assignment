@@ -13,11 +13,17 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    addTodoItems: (state, action: PayloadAction<TodoItem[]>) => {
+      state.todos = [...state.todos, ...action.payload];
+    },
     createTodoItem: (state, action: PayloadAction<TodoItem>) => {
       state.todos.push(action.payload);
     },
     deleteTodoItem: (state, action: PayloadAction<string>) => {
       state.todos = state.todos.filter(item => item.id !== action.payload);
+    },
+    clearAll: state => {
+      state.todos = [];
     },
     setTodoCompletedState: (
       state,
@@ -36,7 +42,12 @@ const todosSlice = createSlice({
   },
 });
 
-export const {createTodoItem, deleteTodoItem, setTodoCompletedState} =
-  todosSlice.actions;
+export const {
+  createTodoItem,
+  deleteTodoItem,
+  setTodoCompletedState,
+  addTodoItems,
+  clearAll,
+} = todosSlice.actions;
 
 export default todosSlice.reducer;

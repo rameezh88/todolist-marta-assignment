@@ -16,11 +16,11 @@ interface SortButtonProps {
 const ICON_SIZE = 14;
 
 const sortOptions = [
+  'createdOn',
   'dueDate',
   'complete',
   'incomplete',
   'priority',
-  'createdOn',
 ];
 
 export function SortButton({onSortOptionChange}: SortButtonProps) {
