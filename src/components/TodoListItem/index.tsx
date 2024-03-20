@@ -22,12 +22,14 @@ interface TodoListItemProps {
   item: TodoItem;
   handleToggleCheckbox: (item: TodoItem, checked: boolean) => void;
   onDelete: (item: TodoItem) => void;
+  onEditPressed: (item: TodoItem) => void;
 }
 
 const TodoListItem: React.FC<TodoListItemProps> = ({
   item,
   onDelete,
   handleToggleCheckbox,
+  onEditPressed,
 }) => {
   const handleDelete = () => {
     onDelete?.(item);
@@ -35,6 +37,10 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
 
   const onToggleCheckbox = () => {
     handleToggleCheckbox?.(item, !item.completed);
+  };
+
+  const handleEditPressed = () => {
+    onEditPressed?.(item);
   };
 
   return (
@@ -68,7 +74,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
               <Priority>{getPriorityText(item.priority)}</Priority>
             </PriorityContainer>
           )}
-          <EditButton>
+          <EditButton onPress={handleEditPressed}>
             <Ionicons name="create-outline" size={25} color="grey" />
           </EditButton>
         </RightContainer>

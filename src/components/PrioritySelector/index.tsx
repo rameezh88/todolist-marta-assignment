@@ -10,13 +10,15 @@ import {
 
 interface PrioritySelectorProps {
   onPriorityChange: (priority: TodoItemPriority) => void;
+  value?: TodoItemPriority;
 }
 
 const PrioritySelector: React.FC<PrioritySelectorProps> = ({
   onPriorityChange,
+  value = 4,
 }) => {
   const [selectedOption, setSelectedOption] = useState<TodoItemPriority | null>(
-    null,
+    value,
   );
 
   const handleOptionSelect = (option: TodoItemPriority) => {

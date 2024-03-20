@@ -16,8 +16,9 @@ const HomeScreen = () => {
     handleSortOptionChange,
     sortedList,
     handleDeletionDialogConfirm,
-    navigation,
     handleToggleCompletedState,
+    handleCreatePressed,
+    handleEditPressed,
   } = useHook();
 
   return (
@@ -42,14 +43,14 @@ const HomeScreen = () => {
             <TodoListItem
               handleToggleCheckbox={handleToggleCompletedState}
               onDelete={handleDelete}
+              onEditPressed={handleEditPressed}
               item={item}
             />
           )}
           estimatedItemSize={200}
         />
       )}
-      <AddNewItemButton
-        onPress={() => navigation.navigate('AddEditTodoItemScreen')}>
+      <AddNewItemButton onPress={handleCreatePressed}>
         <Ionicons name="add-outline" size={32} color="white" />
       </AddNewItemButton>
       <ConfirmationDialog

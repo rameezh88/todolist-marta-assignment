@@ -19,8 +19,10 @@ export function AddEditTodoItemScreen() {
     handleOnPriorityChange,
     titleIsValid,
     title,
+    priority,
     description,
     params,
+    dueDate,
   } = useHook();
 
   return (
@@ -40,8 +42,11 @@ export function AddEditTodoItemScreen() {
         autoCorrect={false}
         multiline
       />
-      <PrioritySelector onPriorityChange={handleOnPriorityChange} />
-      <DateTimeEntry onValueChange={handleDateChange} />
+      <PrioritySelector
+        value={priority}
+        onPriorityChange={handleOnPriorityChange}
+      />
+      <DateTimeEntry value={dueDate} onValueChange={handleDateChange} />
       <SaveButton onPress={handleSavePress}>
         <SaveButtonText>
           {params?.mode === 'edit' ? 'Save changes' : 'Create todo'}

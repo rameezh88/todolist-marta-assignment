@@ -4,7 +4,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TodoItemPriority} from '../../types';
 import {HeaderButton} from './styles';
 import {useDispatch} from 'react-redux';
-import {createTodoItem} from '../../redux/reducers/todos';
+import {
+  createTodoItem,
+  saveChangesToTodoItem,
+} from '../../redux/reducers/todos';
 import {makeId} from '../../utils';
 import {debounce} from 'lodash';
 import {RootStackParamList} from '../../navigation';
@@ -13,24 +16,27 @@ const useHook = () => {
   const navigation = useNavigation();
   const {params} =
     useRoute<RouteProp<RootStackParamList, 'AddEditTodoItemScreen'>>();
+  const {item, mode} = params;
 
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [dueDate, setDueDate] = useState<string>('');
-  const [priority, setPriority] = useState<TodoItemPriority>(4);
+  const [title, setTitle] = useState<string>(item?.title ?? '');
+  const [description, setDescription] = useState<string>(
+    item?.description ?? '',
+  );
+  const [dueDate, setDueDate] = useState<string>(item?.dueDate ?? '');
+  const [priority, setPriority] = useState<TodoItemPriority>(
+    item?.priority ?? 4,
+  );
   const [isEditing, setIsEditing] = useState<boolean>(true);
 
   React.useEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <HeaderButton onPress={handleSavePress}>
           <Ionicons name="checkmark-outline" size={32} color="white" />
         </HeaderButton>
       ),
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerLeft: () => (
         <HeaderButton onPress={handleClosePress}>
           <Ionicons name="close-outline" size={32} color="white" />
@@ -63,17 +69,31 @@ const useHook = () => {
   };
 
   const debouncedSaveToStore = debounce(() => {
-    dispatch(
-      createTodoItem({
-        title,
-        description,
-        dueDate,
-        priority,
-        completed: false,
-        createdOn: new Date().toUTCString(),
-        id: makeId(10), // Create a unique id for each todo item
-      }),
-    );
+    if (mode === 'edit') {
+      if (item) {
+        dispatch(
+          saveChangesToTodoItem({
+            ...item,
+            title,
+            description,
+            dueDate,
+            priority,
+          }),
+        );
+      }
+    } else {
+      dispatch(
+        createTodoItem({
+          title,
+          description,
+          dueDate,
+          priority,
+          completed: false,
+          createdOn: new Date().toUTCString(),
+          id: makeId(10), // Create a unique id for each todo item
+        }),
+      );
+    }
   }, 200);
 
   useEffect(() => {
@@ -101,7 +121,9 @@ const useHook = () => {
     handleOnPriorityChange,
     titleIsValid,
     title,
+    priority,
     description,
+    dueDate,
     params,
   };
 };

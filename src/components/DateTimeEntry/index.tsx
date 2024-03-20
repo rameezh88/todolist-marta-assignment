@@ -8,7 +8,7 @@ import {Container, DateTimeEntryFieldWrapper} from './styles';
 import {getTimeZone} from 'react-native-localize';
 
 export interface DateTimeEntryProps {
-  value?: Date | null;
+  value?: Date | string | null;
   onValueChange?: (value: Date) => void;
 }
 

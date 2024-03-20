@@ -7,15 +7,23 @@ import {DateTimePickerMode} from '../DateTimePickerDialog';
 const useHook = ({value, onValueChange}: DateTimeEntryProps) => {
   // Date value initialed if it has already been set
   const [date, setDate] = useState<Date | null>(() => {
-    if (value && value instanceof Date) {
-      return value;
+    if (value) {
+      if (value instanceof Date) {
+        return value;
+      } else if (typeof value === 'string') {
+        return new Date(value);
+      }
     }
     return null;
   });
   // Time value initialed if it has already been set
   const [time, setTime] = useState<Date | null>(() => {
-    if (value && value instanceof Date) {
-      return value;
+    if (value) {
+      if (value instanceof Date) {
+        return value;
+      } else if (typeof value === 'string') {
+        return new Date(value);
+      }
     }
     return null;
   });

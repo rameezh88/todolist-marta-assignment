@@ -16,6 +16,14 @@ const todosSlice = createSlice({
     addTodoItems: (state, action: PayloadAction<TodoItem[]>) => {
       state.todos = [...state.todos, ...action.payload];
     },
+    saveChangesToTodoItem: (state, action: PayloadAction<TodoItem>) => {
+      state.todos = state.todos.map(todo => {
+        if (todo.id === action.payload.id) {
+          return action.payload;
+        }
+        return todo;
+      });
+    },
     createTodoItem: (state, action: PayloadAction<TodoItem>) => {
       state.todos.push(action.payload);
     },
@@ -45,6 +53,7 @@ const todosSlice = createSlice({
 export const {
   createTodoItem,
   deleteTodoItem,
+  saveChangesToTodoItem,
   setTodoCompletedState,
   addTodoItems,
   clearAll,
