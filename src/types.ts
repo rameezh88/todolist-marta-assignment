@@ -8,4 +8,10 @@ export type TodoItem = {
   priority: TodoItemPriority;
   id: string;
   createdOn: string; // ISO string
+  updated: string; // ISO string
+};
+
+export type TodosObject = {
+  updated: string; // ISO string
+  todos: TodoItem[];
 };

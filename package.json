@@ -12,7 +12,8 @@
     "clean": "source ./scripts/clean.sh",
     "android:gradle:clean": "cd android && ./gradlew clean",
     "android:gradle:build": "cd android && ./gradlew build",
-    "android:gradle:clean:build": "cd android && ./gradlew clean && ./gradlew build"
+    "android:gradle:clean:build": "cd android && ./gradlew clean && ./gradlew build",
+    "start:mock:server": "json-server --watch src/api/db.json --port 8000"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.22.3",

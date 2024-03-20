@@ -1,13 +1,13 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {TodoItem} from '../../../types';
+import {TodoItem, TodosObject} from '../../../types';
 
-export interface SavedState {
+export interface TodosState {
   // Keeps track of when the last local update was performed.
   updated: string; // ISO string
   todos: TodoItem[];
 }
 
-const initialState: SavedState = {
+const initialState: TodosState = {
   updated: '',
   todos: [],
 };
@@ -24,9 +24,9 @@ const todosSlice = createSlice({
       // Add the new items to the end of the todos list
       state.todos = [...state.todos, ...action.payload];
     },
-    replaceTodoItems: (state, action: PayloadAction<TodoItem[]>) => {
+    replaceTodoItems: (state, action: PayloadAction<TodosObject>) => {
       // Replace the existing items with the new ones. Used for syncing with the backend.
-      state.todos = action.payload;
+      state = action.payload;
     },
     saveChangesToTodoItem: (state, action: PayloadAction<TodoItem>) => {
       // Update an existing item in the list

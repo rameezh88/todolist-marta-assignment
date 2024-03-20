@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useMemo} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {SortOption} from '../../components/SortButton';
 import {RootStackParamList} from '../../navigation';
 import {
@@ -12,6 +12,14 @@ import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
 import {TodoItem} from '../../types';
 import {sortBySortOption} from '../../utils';
 
+// const dummyData: TodoItem[] = require('../../dummy/dummyTodoListItems.json');
+
+// function getRandomIntInclusive(min, max) {
+//   const minCeiled = Math.ceil(min);
+//   const maxFloored = Math.floor(max);
+//   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
+// }
+
 const useHook = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const todoItems = useSelector(selectSavedTodos);
@@ -20,6 +28,17 @@ const useHook = () => {
     React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState<TodoItem | null>(null);
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const items = dummyData.map(item => ({
+  //     ...item,
+  //     priority: getRandomIntInclusive(1, 4),
+  //     id: makeId(20),
+  //   }));
+  //   dispatch(addTodoItems(items));
+  //   // dispatch(clearAll());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const handleSortOptionChange = (option: SortOption) => {
     setSortOption(option);

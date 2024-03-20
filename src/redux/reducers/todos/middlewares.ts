@@ -2,21 +2,32 @@ import {createListenerMiddleware, isAnyOf} from '@reduxjs/toolkit';
 import {
   createTodoItem,
   deleteTodoItem,
-  replaceTodoItems,
   saveChangesToTodoItem,
   setTodoCompletedState,
   updateLastUpdated,
 } from '.';
+import {RootState} from '../../store';
+import {syncTodosToBackend} from '../../../api';
 
 const todosListenerMiddleware = createListenerMiddleware();
 
-const handleTodoDataUpdated = async (action: any, listenersApi: any) => {
+const handleTodoDataUpdated = async (_: any, listenersApi: any) => {
   listenersApi.cancelActiveListeners();
-  //   console.log('Intercepting todo data update...');
-  listenersApi.dispatch(updateLastUpdated(new Date().toISOString()));
+
+  // Update last-updated timestamp in Redux store.
+  const lastUpdated = new Date().toISOString();
+  listenersApi.dispatch(updateLastUpdated(lastUpdated));
+
+  const {todos}: RootState = listenersApi.getState();
 
   // Sync with the backend
-  //   console.log('Should sync with the backend...');
+  syncTodosToBackend(
+    {
+      updated: lastUpdated,
+      todos: todos.todos,
+    },
+    listenersApi.dispatch,
+  );
 };
 
 todosListenerMiddleware.startListening({
@@ -25,7 +36,6 @@ todosListenerMiddleware.startListening({
     deleteTodoItem,
     saveChangesToTodoItem,
     setTodoCompletedState,
-    replaceTodoItems,
   ),
   effect: handleTodoDataUpdated,
 });
