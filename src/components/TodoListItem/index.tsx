@@ -1,22 +1,22 @@
 import React from 'react';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {Swipeable} from 'react-native-gesture-handler';
 import {colors} from '../../constants/colors';
 import {TodoItem} from '../../types';
 import {getFormattedDate, getPriorityText} from '../../utils';
 import {
-  CheckBoxContainer,
   Description,
   DueDate,
+  EditButton,
   Priority,
   PriorityContainer,
+  RightContainer,
   TextContainer,
   Title,
   TodoCheckBox,
   TodoItemContainer,
 } from './styles';
 import {renderTodoListItemRightActions} from './utils';
-import {Checkbox} from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface TodoListItemProps {
   item: TodoItem;
@@ -62,11 +62,16 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
             )}`}</DueDate>
           )}
         </TextContainer>
-        {item.priority && (
-          <PriorityContainer priority={item.priority}>
-            <Priority>{getPriorityText(item.priority)}</Priority>
-          </PriorityContainer>
-        )}
+        <RightContainer>
+          {item.priority && (
+            <PriorityContainer priority={item.priority}>
+              <Priority>{getPriorityText(item.priority)}</Priority>
+            </PriorityContainer>
+          )}
+          <EditButton>
+            <Ionicons name="create-outline" size={25} color="grey" />
+          </EditButton>
+        </RightContainer>
       </TodoItemContainer>
     </Swipeable>
   );

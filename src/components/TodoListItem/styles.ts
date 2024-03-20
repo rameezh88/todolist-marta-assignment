@@ -58,6 +58,16 @@ export const PriorityContainer = styled.View<{priority: TodoItemPriority}>`
   }};
 `;
 
+export const RightContainer = styled.View`
+  align-items: center;
+`;
+
+export const EditButton = styled.Pressable.attrs({
+  hitSlop: {top: 15, bottom: 15, left: 15, right: 15},
+})`
+  margin-top: 12px;
+`;
+
 export const Priority = styled.Text`
   font-size: 12px;
   color: white;
