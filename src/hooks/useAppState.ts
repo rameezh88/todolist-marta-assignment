@@ -20,7 +20,6 @@ const useAppState = () => {
       }
 
       appState.current = nextAppState;
-      console.log('AppState', appState.current);
     });
 
     return () => {
