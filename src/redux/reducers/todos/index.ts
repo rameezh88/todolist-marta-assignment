@@ -1,14 +1,17 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {TodoItem, TodosObject} from '../../../types';
+import {SortOption} from '../../../components/SortButton';
 
 export interface TodosState {
   // Keeps track of when the last local update was performed.
   updated: string; // ISO string
+  sortOption: SortOption;
   todos: TodoItem[];
 }
 
 const initialState: TodosState = {
   updated: '',
+  sortOption: 'createdOn',
   todos: [],
 };
 
@@ -16,6 +19,9 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    setSortOption: (state, action: PayloadAction<SortOption>) => {
+      state.sortOption = action.payload;
+    },
     updateLastUpdated: (state, action: PayloadAction<string>) => {
       // Keeps track of when the last local update was performed.
       state.updated = action.payload;
@@ -26,7 +32,10 @@ const todosSlice = createSlice({
     },
     replaceTodoItems: (state, action: PayloadAction<TodosObject>) => {
       // Replace the existing items with the new ones. Used for syncing with the backend.
-      state = action.payload;
+      state = {
+        ...state,
+        ...action.payload,
+      };
     },
     saveChangesToTodoItem: (state, action: PayloadAction<TodoItem>) => {
       // Update an existing item in the list
@@ -65,6 +74,7 @@ const todosSlice = createSlice({
 });
 
 export const {
+  setSortOption,
   updateLastUpdated,
   createTodoItem,
   deleteTodoItem,

@@ -6,9 +6,10 @@ import {SortOption} from '../../components/SortButton';
 import {RootStackParamList} from '../../navigation';
 import {
   deleteTodoItem,
+  setSortOption,
   setTodoCompletedState,
 } from '../../redux/reducers/todos';
-import {selectSavedTodos} from '../../redux/reducers/todos/selectors';
+import {selectSavedSortedTodos} from '../../redux/reducers/todos/selectors';
 import {TodoItem} from '../../types';
 import {sortBySortOption} from '../../utils';
 
@@ -22,8 +23,7 @@ import {sortBySortOption} from '../../utils';
 
 const useHook = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const todoItems = useSelector(selectSavedTodos);
-  const [sortOption, setSortOption] = React.useState<SortOption>('dueDate');
+  const todoItems = useSelector(selectSavedSortedTodos);
   const [confirmationDialogVisible, setConfirmationDialogVisible] =
     React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState<TodoItem | null>(null);
@@ -41,13 +41,8 @@ const useHook = () => {
   // }, []);
 
   const handleSortOptionChange = (option: SortOption) => {
-    setSortOption(option);
+    dispatch(setSortOption(option));
   };
-
-  const sortedList = useMemo(
-    () => sortBySortOption(todoItems, sortOption),
-    [sortOption, todoItems],
-  );
 
   const handleDelete = (item: TodoItem) => {
     setItemToDelete(item);
@@ -88,7 +83,6 @@ const useHook = () => {
     handleDelete,
     handleHideDeleteConfirmationDialog,
     handleSortOptionChange,
-    sortedList,
     handleDeletionDialogConfirm,
     handleToggleCompletedState,
     handleCreatePressed,

@@ -14,7 +14,6 @@ const HomeScreen = () => {
     handleDelete,
     handleHideDeleteConfirmationDialog,
     handleSortOptionChange,
-    sortedList,
     handleDeletionDialogConfirm,
     handleToggleCompletedState,
     handleCreatePressed,
@@ -34,7 +33,7 @@ const HomeScreen = () => {
         ))}
       {todoItems && (
         <FlashList
-          data={sortedList}
+          data={todoItems}
           ListHeaderComponent={
             <HomeHeader onSortOptionChange={handleSortOptionChange} />
           }
