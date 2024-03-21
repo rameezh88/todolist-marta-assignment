@@ -3,10 +3,11 @@ import {TodoItem, TodosObject} from '../../../types';
 import {SortOption} from '../../../components/SortButton';
 
 export interface TodosState {
+  todos: TodoItem[];
   // Keeps track of when the last local update was performed.
   updated: string; // ISO string
+  // Responsible for holding the current sort option.
   sortOption: SortOption;
-  todos: TodoItem[];
 }
 
 const initialState: TodosState = {
@@ -20,6 +21,7 @@ const todosSlice = createSlice({
   initialState,
   reducers: {
     setSortOption: (state, action: PayloadAction<SortOption>) => {
+      // Updates the sort option which then will be used to sort the todos.
       state.sortOption = action.payload;
     },
     updateLastUpdated: (state, action: PayloadAction<string>) => {

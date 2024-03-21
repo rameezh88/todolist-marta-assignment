@@ -18,6 +18,7 @@ const HomeScreen = () => {
     handleToggleCompletedState,
     handleCreatePressed,
     handleEditPressed,
+    handleScrollEndReached,
   } = useHook();
 
   return (
@@ -47,6 +48,7 @@ const HomeScreen = () => {
             />
           )}
           estimatedItemSize={200}
+          onEndReached={handleScrollEndReached}
         />
       )}
       <AddNewItemButton onPress={handleCreatePressed}>

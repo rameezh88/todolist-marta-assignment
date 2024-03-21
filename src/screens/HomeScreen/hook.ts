@@ -1,17 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useMemo} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 import {SortOption} from '../../components/SortButton';
+import usePaginatedLoadItems from '../../hooks/usePaginatedLoadItems';
 import {RootStackParamList} from '../../navigation';
 import {
   deleteTodoItem,
   setSortOption,
   setTodoCompletedState,
 } from '../../redux/reducers/todos';
-import {selectSavedSortedTodos} from '../../redux/reducers/todos/selectors';
 import {TodoItem} from '../../types';
-import {sortBySortOption} from '../../utils';
 
 // const dummyData: TodoItem[] = require('../../dummy/dummyTodoListItems.json');
 
@@ -23,11 +22,12 @@ import {sortBySortOption} from '../../utils';
 
 const useHook = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const todoItems = useSelector(selectSavedSortedTodos);
   const [confirmationDialogVisible, setConfirmationDialogVisible] =
     React.useState(false);
   const [itemToDelete, setItemToDelete] = React.useState<TodoItem | null>(null);
   const dispatch = useDispatch();
+
+  const {todoItems, loadNextPage} = usePaginatedLoadItems();
 
   // useEffect(() => {
   //   const items = dummyData.map(item => ({
@@ -77,6 +77,10 @@ const useHook = () => {
     navigation.navigate('AddEditTodoItemScreen', {mode: 'edit', item});
   };
 
+  const handleScrollEndReached = () => {
+    loadNextPage();
+  };
+
   return {
     todoItems,
     confirmationDialogVisible,
@@ -87,6 +91,7 @@ const useHook = () => {
     handleToggleCompletedState,
     handleCreatePressed,
     handleEditPressed,
+    handleScrollEndReached,
   };
 };
 
