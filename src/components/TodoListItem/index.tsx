@@ -69,7 +69,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({
           )}
         </TextContainer>
         <RightContainer>
-          {item.priority && (
+          {item.priority < 4 && (
             <PriorityContainer priority={item.priority}>
               <Priority>{getPriorityText(item.priority)}</Priority>
             </PriorityContainer>
