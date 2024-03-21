@@ -11,6 +11,7 @@ import {
   setTodoCompletedState,
 } from '../../redux/reducers/todos';
 import {TodoItem} from '../../types';
+import {setCurrentPage} from '../../redux/reducers/pagination';
 
 // const dummyData: TodoItem[] = require('../../dummy/dummyTodoListItems.json');
 
@@ -42,6 +43,7 @@ const useHook = () => {
 
   const handleSortOptionChange = (option: SortOption) => {
     dispatch(setSortOption(option));
+    dispatch(setCurrentPage(1));
   };
 
   const handleDelete = (item: TodoItem) => {

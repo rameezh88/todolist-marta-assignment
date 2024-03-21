@@ -5,6 +5,11 @@ import {selectCurrentPage, selectItemsPerPage} from '../pagination/selectors';
 
 export const selectTodosData = ({todos}: RootState) => todos;
 
+export const selectSortOption = createSelector(
+  selectTodosData,
+  ({sortOption}) => sortOption,
+);
+
 export const selectSavedSortedTodos = createSelector(
   selectTodosData,
   ({todos, sortOption}) => sortBySortOption(todos, sortOption),
