@@ -12,6 +12,6 @@ export type TodoItem = {
 };
 
 export type TodosObject = {
-  updated: string; // ISO string
+  updated: string | null; // ISO string
   todos: TodoItem[];
 };

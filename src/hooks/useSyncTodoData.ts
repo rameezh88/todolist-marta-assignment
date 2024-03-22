@@ -18,7 +18,7 @@ const useSyncTodoData = () => {
         // Sync todo data with the backend every 20 seconds.
         syncTodosToBackend(todoData);
       }
-    }, 20000);
+    }, 10000);
 
     const unsubscribe = addNetInfoEventListener(state => {
       if (state.isConnected && !internetConnected.current) {

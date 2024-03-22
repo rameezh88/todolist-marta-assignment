@@ -5,13 +5,13 @@ import {SortOption} from '../../../components/SortButton';
 export interface TodosState {
   todos: TodoItem[];
   // Keeps track of when the last local update was performed.
-  updated: string; // ISO string
+  updated: string | null; // ISO string
   // Responsible for holding the current sort option.
   sortOption: SortOption;
 }
 
 const initialState: TodosState = {
-  updated: '',
+  updated: null,
   sortOption: 'createdOn',
   todos: [],
 };
