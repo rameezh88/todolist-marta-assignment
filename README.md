@@ -71,7 +71,14 @@ The app is structured according the specifications provided via email. I skipped
 
 ### Screen recordings:
 
+## Creating, editing, and deleting an item
+
+https://github.com/rameezh88/todolist-marta-assignment/assets/2458559/c29f3a90-da37-45db-b9fe-26d0a35e3f7e
+
+## Sorting and pagination
 I have used some generated "lorem-ipsum" dummy data for demo purposes. It's not the prettiest, but it should demonstrate the main functionalities of the app.
+
+Google Drive link: https://drive.google.com/file/d/1cBmwDOfpCU_9M8jBvyyfwT0UH71nnIMx/view?usp=sharing
 
 #### iOS
 
