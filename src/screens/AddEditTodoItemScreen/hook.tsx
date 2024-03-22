@@ -16,17 +16,16 @@ const useHook = () => {
   const navigation = useNavigation();
   const {params} =
     useRoute<RouteProp<RootStackParamList, 'AddEditTodoItemScreen'>>();
-  const {item, mode} = params;
 
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState<string>(item?.title ?? '');
+  const [title, setTitle] = useState<string>(params?.item?.title ?? '');
   const [description, setDescription] = useState<string>(
-    item?.description ?? '',
+    params?.item?.description ?? '',
   );
-  const [dueDate, setDueDate] = useState<string>(item?.dueDate ?? '');
+  const [dueDate, setDueDate] = useState<string>(params?.item?.dueDate ?? '');
   const [priority, setPriority] = useState<TodoItemPriority>(
-    item?.priority ?? 4,
+    params?.item?.priority ?? 4,
   );
   const [isEditing, setIsEditing] = useState<boolean>(true);
 
@@ -69,8 +68,9 @@ const useHook = () => {
   };
 
   const debouncedSaveToStore = debounce(() => {
-    if (mode === 'edit') {
-      if (item) {
+    if (params?.mode === 'edit') {
+      if (params?.item) {
+        const {item} = params;
         dispatch(
           saveChangesToTodoItem({
             ...item,

@@ -1,13 +1,12 @@
 import {addEventListener as addNetInfoEventListener} from '@react-native-community/netinfo';
 import {useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {syncTodosToBackend} from '../api';
 import {selectTodosData} from '../redux/reducers/todos/selectors';
 import useAppState from './useAppState';
 
 // Hook that syncs the data from the Redux store with the backend.
 const useSyncTodoData = () => {
-  const dispatch = useDispatch();
   const todoData = useSelector(selectTodosData);
   const internetConnected = useRef(false);
 
@@ -17,14 +16,14 @@ const useSyncTodoData = () => {
     const timer = setInterval(() => {
       if (todoData) {
         // Sync todo data with the backend every 20 seconds.
-        syncTodosToBackend(todoData, dispatch);
+        syncTodosToBackend(todoData);
       }
     }, 20000);
 
     const unsubscribe = addNetInfoEventListener(state => {
       if (state.isConnected && !internetConnected.current) {
         // Sync data when Internet connection is re-established.
-        syncTodosToBackend(todoData, dispatch);
+        syncTodosToBackend(todoData);
       }
       internetConnected.current = !!state.isConnected;
     });
@@ -35,15 +34,13 @@ const useSyncTodoData = () => {
       // Unsubscribe from NetInfo event listener
       unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todoData]);
 
   useEffect(() => {
     if (appInForeground && todoData) {
       // App in foreground. Syncing todo data with backend
-      syncTodosToBackend(todoData, dispatch);
+      syncTodosToBackend(todoData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appInForeground, todoData]);
 };
 
