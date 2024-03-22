@@ -5,21 +5,13 @@ import {useDispatch} from 'react-redux';
 import {SortOption} from '../../components/SortButton';
 import usePaginatedLoadItems from '../../hooks/usePaginatedLoadItems';
 import {RootStackParamList} from '../../navigation';
+import {setCurrentPage} from '../../redux/reducers/pagination';
 import {
   deleteTodoItem,
   setSortOption,
   setTodoCompletedState,
 } from '../../redux/reducers/todos';
 import {TodoItem} from '../../types';
-import {setCurrentPage} from '../../redux/reducers/pagination';
-
-// const dummyData: TodoItem[] = require('../../dummy/dummyTodoListItems.json');
-
-// function getRandomIntInclusive(min, max) {
-//   const minCeiled = Math.ceil(min);
-//   const maxFloored = Math.floor(max);
-//   return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // The maximum is inclusive and the minimum is inclusive
-// }
 
 const useHook = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -29,17 +21,6 @@ const useHook = () => {
   const dispatch = useDispatch();
 
   const {todoItems, loadNextPage} = usePaginatedLoadItems();
-
-  // useEffect(() => {
-  //   const items = dummyData.map(item => ({
-  //     ...item,
-  //     priority: getRandomIntInclusive(1, 4),
-  //     id: makeId(20),
-  //   }));
-  //   dispatch(addTodoItems(items));
-  //   // dispatch(clearAll());
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const handleSortOptionChange = (option: SortOption) => {
     dispatch(setSortOption(option));
@@ -72,7 +53,7 @@ const useHook = () => {
   };
 
   const handleCreatePressed = () => {
-    navigation.navigate('AddEditTodoItemScreen');
+    navigation.navigate('AddEditTodoItemScreen', {});
   };
 
   const handleEditPressed = (item: TodoItem) => {
